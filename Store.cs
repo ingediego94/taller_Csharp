@@ -65,61 +65,71 @@ namespace chsarp_ana
             Console.ResetColor();
         }
         
+        // DISCOUNT:
+        public static void Discount()
+        {
+            
+        }
         
         // SEARCHING PRODUCTS BY NAME AND BUYING PROCESS:
         public static void SearchProduct(List<Product> products, string name)
         {
             string response = "no";
-            do
-            {
-
+            // while (response == "si")
+            // {
+            //     
+            // }// Use LINQ to search the product by name
+            // it validates that the product name's and the name that write the user be the same it doesn't matter if they have words in mayusc or if they have spaces at the end of the begining.
+            var product = products.FirstOrDefault(p => p.Name.Trim().Equals(name.Trim(), StringComparison.OrdinalIgnoreCase));
+            double subtotal = 0;
             
-                // Use LINQ to search the product by name
-                // it validates that the product name's and the name that write the user be the same it doesn't matter if they have words in mayusc or if they have spaces at the end of the begining.
-                var product = products.FirstOrDefault(p => p.Name.Trim().Equals(name.Trim(), StringComparison.OrdinalIgnoreCase));
-                double subtotal = 0;
+            if (product != null)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Producto encontrado: {product.Name}");
+                Console.WriteLine($"Precio: ${product.Price:F2}");
+                Console.WriteLine($"Cantidad: {product.Stock}");
                 
-                if (product != null)
+                // ----------
+                Console.WriteLine("Cuantas unidades desea? ");
+                int units = Convert.ToInt32(Console.ReadLine());
+
+                if (units > 0 && units <= product.Stock)
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"Producto encontrado: {product.Name}");
-                    Console.WriteLine($"Precio: ${product.Price:F2}");
-                    Console.WriteLine($"Cantidad: {product.Stock}");
+                    product.Stock -= units;
+                    subtotal += units * product.Price;
+                    historyProducts.Add(product.Name);
+                    historyTotals.Add(subtotal);
+                    Console.WriteLine($"Total: $ {subtotal}");
+                    Console.WriteLine($"Quedan {product.Stock} de {product.Name}(es). ");
+                    Console.Write("\nDeseas seguir comprando? ");
+                    response = Console.ReadLine().ToLower().Trim();
+                    if (response != "si") return;
                     
-                    // ----------
-                    Console.WriteLine("Cuantas unidades desea? ");
-                    int units = Convert.ToInt32(Console.ReadLine());
-
-                    if (units > 0 && units <= product.Stock)
-                    {
-                        product.Stock -= units;
-                        subtotal += units * product.Price;
-                        historyProducts.Add(product.Name);
-                        historyTotals.Add(subtotal);
-                        Console.WriteLine($"Total: $ {subtotal}");
-                        Console.WriteLine($"Quedan {product.Stock} de {product.Name}(es). ");
-                        Console.Write("\nDeseas seguir comprando? ");
-                        response = Console.ReadLine().ToLower().Trim();
-                        //if(response == "si") Searching(products);
-                    } 
-                    else if (units > product.Stock)
-                        Console.WriteLine("Su pedido excede la cantidad de stock actual. Intente de nuevo.");
-                    else
-                        Console.WriteLine("La cantidad solicitada es cero o un número negativo. Revisa e intenta de nuevo.");
-
-                    
-                    Console.ResetColor();
-                }
+                    Searching(products);
+                } 
+                else if (units > product.Stock)
+                    Console.WriteLine("Su pedido excede la cantidad de stock actual. Intente de nuevo.");
                 else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Producto '{name}' no encontrado.");
-                    Console.ResetColor();
-                }
-            } while (response == "si");
+                    Console.WriteLine("La cantidad solicitada es cero o un número negativo. Revisa e intenta de nuevo.");
+
+                
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Producto '{name}' no encontrado.");
+                Console.ResetColor();
+            }
 
             Console.WriteLine($"El historial de compra es: {string.Join(", ",historyProducts)}"); 
-            //Console.WriteLine($"El historial de compra es: {string.Join(", ",historyProducts)}"); 
+            Console.WriteLine($"El total de la compra es: {historyTotals.Sum()}"); 
+            
+            // DISCOUNT:
+
+            
+            
             
         }
     }
