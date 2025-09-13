@@ -36,7 +36,7 @@
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/ingediego94/taller_Csharp.git",
-    "accountId": "26b645b1-55c2-49df-bd20-5aef65c59283"
+    "accountId": "b72c0c6c-7f11-492f-b2e9-8030c3d92c0a"
   }
 }]]></component>
   <component name="HighlightingSettingsPerFile">
@@ -58,7 +58,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "dev",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -105,6 +105,7 @@
       <workItem from="1757653401105" duration="3162000" />
       <workItem from="1757640463277" duration="6841000" />
       <workItem from="1757677456105" duration="7048000" />
+      <workItem from="1757724654981" duration="6287000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <option name="closed" value="true" />
