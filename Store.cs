@@ -14,6 +14,8 @@ namespace chsarp_ana
     {
         private static List<string> historyProducts = new List<string>();
         private static List<double> historyTotals = new List<double>();
+        public static double Total => historyTotals.Sum();
+        
         public static void Run()
         {
             // PRODUCTS:
@@ -68,17 +70,27 @@ namespace chsarp_ana
         // DISCOUNT:
         public static void Discount()
         {
-            
+            double discMaj10 = 0.10;
+            double discMaj20 = 0.20;
+            double totalFinal = Total;
+            double total10K = 10000;    // Buys major than $10000.
+            double total20K = 20000;    // Buys major than $20000.
+
+            totalFinal = (Total >= total20K) ? totalFinal * (1 - discMaj20) :
+                (Total >= total10K) ? totalFinal * (1 - discMaj10) :
+                totalFinal;
+            Console.WriteLine($"El historial de compra es: {string.Join(", ",historyProducts)}"); 
+            Console.WriteLine($"Total con descuento: $ {totalFinal}.");
+            Console.WriteLine($"Ahorraste: $ {Total - totalFinal}.");
         }
+        
         
         // SEARCHING PRODUCTS BY NAME AND BUYING PROCESS:
         public static void SearchProduct(List<Product> products, string name)
         {
             string response = "no";
-            // while (response == "si")
-            // {
-            //     
-            // }// Use LINQ to search the product by name
+   
+            // // Use LINQ to search the product by name
             // it validates that the product name's and the name that write the user be the same it doesn't matter if they have words in mayusc or if they have spaces at the end of the begining.
             var product = products.FirstOrDefault(p => p.Name.Trim().Equals(name.Trim(), StringComparison.OrdinalIgnoreCase));
             double subtotal = 0;
@@ -87,11 +99,11 @@ namespace chsarp_ana
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Producto encontrado: {product.Name}");
-                Console.WriteLine($"Precio: ${product.Price:F2}");
-                Console.WriteLine($"Cantidad: {product.Stock}");
+                Console.WriteLine($"\tPrecio: ${product.Price:F2}");
+                Console.WriteLine($"\tCantidad: {product.Stock}");
                 
                 // ----------
-                Console.WriteLine("Cuantas unidades desea? ");
+                Console.Write("\tCuantas unidades desea? ");
                 int units = Convert.ToInt32(Console.ReadLine());
 
                 if (units > 0 && units <= product.Stock)
@@ -123,14 +135,14 @@ namespace chsarp_ana
                 Console.ResetColor();
             }
 
-            Console.WriteLine($"El historial de compra es: {string.Join(", ",historyProducts)}"); 
-            Console.WriteLine($"El total de la compra es: {historyTotals.Sum()}"); 
+            // Console.WriteLine($"El historial de compra es: {string.Join(", ",historyProducts)}"); 
+            //Console.WriteLine($"El total de la compra es: $ {Total}."); 
             
             // DISCOUNT:
+            Discount();
 
             
-            
-            
+
         }
     }
 }
