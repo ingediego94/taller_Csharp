@@ -139,7 +139,11 @@ namespace chsarp_ana
             //Console.WriteLine($"El total de la compra es: $ {Total}."); 
             
             // DISCOUNT:
+
+
+ 
             Discount();
+
 
             
 
